@@ -1,4 +1,4 @@
-FROM apache/superset:2.1.0
+FROM apache/superset:3.1.1
 # Switching to root to install the required packages
 USER root
 
@@ -13,8 +13,9 @@ ENV REQUIREMENTS_LOCAL=/app/requirements.txt
 
 # Example: add custom configuration
 # https://superset.apache.org/docs/installation/configuring-superset/#configuring-superset
-COPY superset_config.py /app/superset_config.py
+COPY --chmod=777 superset_config.py /app/
 ENV SUPERSET_CONFIG_PATH /app/superset_config.py
 
 # Switching back to using the `superset` user
 USER superset
+ENTRYPOINT [ "/usr/bin/run-server.sh" ]
